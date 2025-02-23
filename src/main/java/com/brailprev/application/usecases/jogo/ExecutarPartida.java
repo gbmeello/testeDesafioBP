@@ -3,31 +3,28 @@ package com.brailprev.application.usecases.jogo;
 import com.brailprev.domain.jogador.entities.Jogador;
 import com.brailprev.domain.jogador.services.JogadorService;
 import com.brailprev.domain.jogo.entities.Propriedade;
+import com.brailprev.domain.jogo.entities.ResultadoPartida;
 import org.springframework.stereotype.Component;
 
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 @Component
 public class ExecutarPartida {
 
     private static final int MAX_RODADAS = 1000; // 🔹 Evita loop infinito
-    private final Random random = new Random();
     private final JogadorService jogadorService;
 
     public ExecutarPartida(JogadorService jogadorService) {
         this.jogadorService = jogadorService;
     }
 
-    public Jogador executar(List<Jogador> jogadores, List<Propriedade> propriedades) {
+    public ResultadoPartida executar(List<Jogador> jogadores, List<Propriedade> propriedades) {
         int rodadas = 0;
 
         while (jogadores.size() > 1 && rodadas < MAX_RODADAS) {
-            Iterator<Jogador> iterator = jogadores.iterator();
-            while (iterator.hasNext()) {
-                Jogador jogador = iterator.next();
-                int dado = random.nextInt(6) + 1;
+            for (Jogador jogador : jogadores) {
+                int dado = (int) (Math.random() * 6) + 1;
                 jogador.mover(dado, propriedades.size());
 
                 Propriedade propriedade = propriedades.get(jogador.getPosicao());
@@ -38,11 +35,33 @@ public class ExecutarPartida {
                     jogador.pagarAluguel(propriedade);
                 }
             }
+
+            // 🔹 Remove jogadores sem saldo
             jogadorService.removerJogadoresSemSaldo(jogadores);
+
             rodadas++;
         }
 
-        // 🔹 Se atingir o limite, retorna o jogador com mais saldo
-        return jogadores.stream().max((j1, j2) -> Integer.compare(j1.getSaldo(), j2.getSaldo())).orElse(null);
+        // 🔹 Ordenar jogadores por saldo (do maior para o menor)
+        jogadores.sort(Comparator.comparingInt(Jogador::getSaldo).reversed());
+
+        // 🔹 Calcular quem tem mais propriedades
+        Jogador jogadorComMaisPropriedades = jogadores.stream()
+                .max(Comparator.comparingInt(j -> j.getPropriedades().size()))
+                .orElse(null);
+
+        // 🔹 Calcular quem tem mais dinheiro
+        Jogador jogadorComMaisDinheiro = jogadores.stream()
+                .max(Comparator.comparingInt(Jogador::getSaldo))
+                .orElse(null);
+
+        // 🔹 Criar resultado da partida
+        ResultadoPartida resultado = new ResultadoPartida();
+        resultado.setVencedor(jogadores.get(0)); // Primeiro lugar
+        resultado.setClassificacao(jogadores); // Classificação completa
+        resultado.setJogadorComMaisPropriedades(jogadorComMaisPropriedades);
+        resultado.setJogadorComMaisDinheiro(jogadorComMaisDinheiro);
+
+        return resultado;
     }
 }

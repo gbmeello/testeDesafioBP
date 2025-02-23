@@ -5,14 +5,15 @@ import com.brailprev.domain.jogador.entities.Jogador;
 import com.brailprev.domain.jogador.services.JogadorService;
 import com.brailprev.domain.jogo.entities.Jogo;
 import com.brailprev.domain.jogo.entities.Propriedade;
+import com.brailprev.domain.jogo.entities.ResultadoPartida;
 import com.brailprev.domain.jogo.repositories.JogoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 @Service
 public class JogoService {
@@ -41,11 +42,11 @@ public class JogoService {
         System.out.println("Jogo iniciado com " + jogadores.size() + " jogadores e " + propriedades.size() + " propriedades.");
 
         // Simular a partida
-        Jogador vencedor = executarPartida.executar(jogadores, propriedades);
+        ResultadoPartida resultado = executarPartida.executar(jogadores, propriedades);
 
         // Salvar no banco de dados
         Jogo jogoSalvo = new Jogo(
-                vencedor.getTipo().name(),
+                resultado.getVencedor().getTipo().name(),
                 jogadores.stream().map(j -> j.getTipo().name()).toList()
         );
 
@@ -60,20 +61,22 @@ public class JogoService {
         List<Jogador> jogadores = jogadorService.inicializarJogadores();
         List<Propriedade> propriedades = propriedadeService.inicializarPropriedades(20);
 
-        Jogador vencedor = executarPartida.executar(jogadores, propriedades);
+        ResultadoPartida resultado = executarPartida.executar(jogadores, propriedades);
 
         // 🔹 Garante que há um vencedor
-        if (vencedor == null) {
+        if (resultado.getVencedor() == null) {
             return Map.of("erro", "Nenhum jogador venceu dentro do limite de rodadas.");
         }
 
         // 🔹 Ordenar jogadores por saldo, do maior para o menor
         jogadores.sort(Comparator.comparingInt(Jogador::getSaldo).reversed());
 
-        Map<String, Object> resultado = new HashMap<>();
-        resultado.put("vencedor", vencedor.getTipo().name());
-        resultado.put("jogadores", jogadores.stream().map(j -> j.getTipo().name()).toList());
+        Map<String, Object> resultadoMap = new HashMap<>();
+        resultadoMap.put("vencedor", resultado.getVencedor().getTipo().name());
+        resultadoMap.put("classificacao", jogadores.stream().map(j -> j.getTipo().name()).toList());
+        resultadoMap.put("jogadorComMaisPropriedades", resultado.getJogadorComMaisPropriedades().getTipo().name());
+        resultadoMap.put("jogadorComMaisDinheiro", resultado.getJogadorComMaisDinheiro().getTipo().name());
 
-        return resultado;
+        return resultadoMap;
     }
 }
