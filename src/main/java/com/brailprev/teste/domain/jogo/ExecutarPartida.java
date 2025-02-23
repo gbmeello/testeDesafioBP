@@ -1,8 +1,8 @@
-package com.brailprev.teste.application.usecases;
+package com.brailprev.teste.domain.jogo;
 
-import com.brailprev.teste.domain.entities.Jogador;
-import com.brailprev.teste.domain.entities.Propriedade;
-import com.brailprev.teste.application.services.JogadorService;
+import com.brailprev.teste.application.usecases.jogador.entities.Jogador;
+import com.brailprev.teste.application.usecases.jogo.entities.Propriedade;
+import com.brailprev.teste.application.usecases.jogador.service.JogadorService;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;

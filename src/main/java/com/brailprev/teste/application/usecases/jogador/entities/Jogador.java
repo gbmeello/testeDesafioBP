@@ -1,6 +1,7 @@
-package com.brailprev.teste.domain.entities;
+package com.brailprev.teste.application.usecases.jogador.entities;
 
-import com.brailprev.teste.domain.enums.TipoJogador;
+import com.brailprev.teste.application.usecases.jogo.entities.Propriedade;
+import com.brailprev.teste.application.usecases.jogador.enums.TipoJogador;
 import lombok.Getter;
 import lombok.Setter;
 

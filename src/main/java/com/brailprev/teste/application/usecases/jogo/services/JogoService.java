@@ -1,10 +1,11 @@
-package com.brailprev.teste.application.services;
+package com.brailprev.teste.application.usecases.jogo.services;
 
-import com.brailprev.teste.domain.entities.Jogador;
-import com.brailprev.teste.domain.entities.Jogo;
-import com.brailprev.teste.domain.entities.Propriedade;
-import com.brailprev.teste.infrastructure.persistence.JogoRepository;
-import com.brailprev.teste.application.usecases.ExecutarPartida;
+import com.brailprev.teste.application.usecases.jogador.service.JogadorService;
+import com.brailprev.teste.application.usecases.jogador.entities.Jogador;
+import com.brailprev.teste.application.usecases.jogo.entities.Jogo;
+import com.brailprev.teste.application.usecases.jogo.entities.Propriedade;
+import com.brailprev.teste.application.usecases.jogo.persistence.JogoRepository;
+import com.brailprev.teste.domain.jogo.ExecutarPartida;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

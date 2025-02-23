@@ -1,5 +1,6 @@
-package com.brailprev.teste.domain.entities;
+package com.brailprev.teste.application.usecases.jogo.entities;
 
+import com.brailprev.teste.application.usecases.jogador.entities.Jogador;
 import lombok.Getter;
 import lombok.Setter;
 

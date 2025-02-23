@@ -1,4 +1,4 @@
-package com.brailprev.teste.domain.entities;
+package com.brailprev.teste.application.usecases.jogo.entities;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.brailprev.teste.application.services;
+package com.brailprev.teste.application.usecases.jogador.service;
 
-import com.brailprev.teste.domain.entities.Jogador;
-import com.brailprev.teste.domain.enums.TipoJogador;
+import com.brailprev.teste.application.usecases.jogador.entities.Jogador;
+import com.brailprev.teste.application.usecases.jogador.enums.TipoJogador;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

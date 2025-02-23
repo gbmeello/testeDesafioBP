@@ -1,6 +1,6 @@
-package com.brailprev.teste.application.services;
+package com.brailprev.teste.application.usecases.jogo.services;
 
-import com.brailprev.teste.domain.entities.Propriedade;
+import com.brailprev.teste.application.usecases.jogo.entities.Propriedade;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

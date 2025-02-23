@@ -1,6 +1,6 @@
-package com.brailprev.teste.infrastructure.persistence;
+package com.brailprev.teste.application.usecases.jogo.persistence;
 
-import com.brailprev.teste.domain.entities.Jogo;
+import com.brailprev.teste.application.usecases.jogo.entities.Jogo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

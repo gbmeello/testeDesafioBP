@@ -1,6 +1,6 @@
-package com.brailprev.teste.infrastructure.controllers;
+package com.brailprev.teste.application.infrastructure.controllers.jogo;
 
-import com.brailprev.teste.application.services.JogoService;
+import com.brailprev.teste.application.usecases.jogo.services.JogoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
